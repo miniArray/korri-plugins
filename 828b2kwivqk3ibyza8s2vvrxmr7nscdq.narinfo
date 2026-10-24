@@ -1,0 +1,10 @@
+StorePath: /nix/store/828b2kwivqk3ibyza8s2vvrxmr7nscdq-eggshell
+URL: https://github.com/miniArray/korri-plugins/releases/download/build-739d42d0cd44/0xvjgcj4k6clajbqawvmw0hhy07vns2z4lciik4jw18mmwldr6sd.nar.xz
+Compression: xz
+FileHash: sha256:0xvjgcj4k6clajbqawvmw0hhy07vns2z4lciik4jw18mmwldr6sd
+FileSize: 460
+NarHash: sha256:0dnl7b5qwd2p7k9w49bqrypxddkzy6c9c4p7wwhfy25yw6siva2k
+NarSize: 1408
+References: 5rb77d089c6q8pbg24z3d2qcmwldj0mv-godot-4.7.2-stable nnm9gdr70ihc6zc9298mzz8jpcgaciql-bash-5.3p20 rpm7m0f7nvw0pd0hi4zincv7hrc8i91p-eggshell-pack
+Deriver: k0wypv3vvlqd8z46ffv0pqgqyxwd1qf4-eggshell.drv
+Sig: miniarray-plugins-1:XZBYPnNpfoH5suXRz9jrSMgVNi79jKIPH8OsfYBM79dVk3p1aXvs1hRXR9Gy/W6y/fFzhMieuQL/SF9gDrM/AQ==

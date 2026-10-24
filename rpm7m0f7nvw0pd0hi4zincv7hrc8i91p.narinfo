@@ -1,0 +1,10 @@
+StorePath: /nix/store/rpm7m0f7nvw0pd0hi4zincv7hrc8i91p-eggshell-pack
+URL: https://github.com/miniArray/korri-plugins/releases/download/build-739d42d0cd44/0i08bppisvw1fkvq77gbrrbg8bqly8xizqy9jjchwva84wbsd16y.nar.xz
+Compression: xz
+FileHash: sha256:0i08bppisvw1fkvq77gbrrbg8bqly8xizqy9jjchwva84wbsd16y
+FileSize: 286960
+NarHash: sha256:1jpkmajjiw12xdb19b0dvb2wfwllk2b9phh3lv4q5cmdr1kkb8x4
+NarSize: 465440
+References: 
+Deriver: yvi8h5ykd92yh46cc1saf6747s2czl64-eggshell-pack.drv
+Sig: miniarray-plugins-1:wKl2dTncU3XdZW7vJm1xnvdOfx/kkYb1nSd12YjT4lrLQQXGNdtHP2ll/WxEBuwJQPwPO5au0gjspFgZqNt4DQ==
