@@ -14,7 +14,7 @@ the owner's exact approval digest.
 ```nix
 services.korri.pluginHost.publishers."@miniarray" = {
   publicKey = "miniarray-plugins-1:4p6fkCeEKBzk58bvj2bIWHFDQzs+6ADZD20z7a9hnjs=";
-  cacheUrl = "https://github.com/miniArray/korri-plugins/releases/download/cache/";
+  cacheUrl = "https://miniarray.github.io/korri-plugins/";
 };
 ```
 
@@ -40,10 +40,15 @@ nix build --no-link .#packages.x86_64-linux.korri-plugin-eggshell
 nix build --no-link .#packages.aarch64-linux.korri-plugin-eggshell
 ```
 
-The signed cache uses the standard Nix file-cache format, published as GitHub
-release assets: a mutable `cache` release holds `nix-cache-info` and signed
-`.narinfo` files, and one `build-<commit>` release per batch holds the NARs.
-Paths already on cache.nixos.org are omitted. Publication uses korri-os/plugins'
-`nix/github-cache.py` (`export`, `prepare --upstream https://cache.nixos.org/`,
-`publish`). The private signing key is the `NIX_CACHE_SIGNING_KEY` secret and
-never enters Git or the Nix store.
+The signed cache uses the standard Nix file-cache format. GitHub Pages serves
+`nix-cache-info` and signed `.narinfo` files from `cache-index`. One
+`build-<commit12>` release per batch holds NAR payloads and architecture-specific
+offline metadata. Existing NARs do not move. The old `cache` release stays frozen
+and readable for old receipts and rollback.
+
+Paths already on cache.nixos.org are omitted. All plugin repositories use the
+same publisher from korri-os/plugins, not separately maintained copies.
+[PUBLICATION.md](PUBLICATION.md) pins the tool and describes publication.
+The private signing key is the `NIX_CACHE_SIGNING_KEY` secret and never enters
+Git or the Nix store. Updating a device's exact bound URL requires a separate
+reviewed receipt migration; changing this README grants no device approval.
