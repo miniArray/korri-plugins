@@ -50,7 +50,9 @@ For Bad Culture and Rot and Light, `covered-source/*.crate` contains the
 unchanged Rust dependency archives, checked against the exact public
 `Cargo.lock` checksums. It includes the MPL-covered gdext source and other
 locked dependency notices. The original-work restriction does not apply
-to those files. The complete MPL-2.0 text accompanies them. Its primary
+to those files. The compiled bindings also carry the exact Rust compiler's
+standard-library copyright inventory and MIT/Apache license texts from its
+prebuilt documentation output. The complete MPL-2.0 text accompanies them. Its primary
 source is <https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt>,
 SHA256 `fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85`.
 Mozilla's [binary distribution guidance](https://www.mozilla.org/en-US/MPL/2.0/FAQ/#distribute-my-binaries)
@@ -65,10 +67,12 @@ notice alone are not a binary-compliance guarantee.
 ## Verification boundary
 
 `checks.<system>.native-games` uses the real host's effect-free `seed`
-validation and korrid's real `plugin-prepare` sandbox. It checks generated
-hashes, package identity, notice/source files, launch plans and refusal
-cases. It then runs each actual packaged game headlessly on that build
-architecture. This does not verify graphical output, controller handling,
+validation and the pinned korrid's supported `plugin-run` command. A real
+temporary capture program records arguments, environment and working
+directory after sandbox preparation and execution. The host separately
+validates the actual game package and its materialized hash. Tests cover
+notice/source files, launch behavior and refusal cases. They then run each
+actual packaged game headlessly on that build architecture. This does not verify graphical output, controller handling,
 performance or physical devices.
 
 Build only on workstations or configured build servers. Publication uses

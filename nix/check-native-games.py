@@ -1,5 +1,5 @@
 #!/usr/bin/env -S nix shell nixpkgs#python3 -c python3
-"""Exercise real host declaration checks and korrid's effect-free launch sandbox."""
+"""Exercise real host checks and pinned korrid's supported plugin-run path."""
 import hashlib
 import json
 import os
@@ -30,24 +30,33 @@ for package in packages:
     if slug != 'credence':
         assert list((notices / 'covered-source').glob('godot-*.crate'))
         assert (notices / 'MPL-2.0.txt').stat().st_size > 0
+        assert (notices / 'rust-standard-library' / 'COPYRIGHT-library.html').stat().st_size > 0
+        assert list((notices / 'rust-standard-library').glob('LICENSE-MIT-*.txt'))
+        assert list((notices / 'rust-standard-library').glob('LICENSE-APACHE-*.txt'))
     checks += 1
     with tempfile.TemporaryDirectory(prefix='native-launch-check-') as temporary:
         account = str(Path(temporary) / 'account')
         save = str(Path(temporary) / 'save')
+        # Pinned Core exposes plugin-run, not the later plugin-prepare CLI.
+        # A real capture executable records its argv/environment/cwd after
+        # production sandbox preparation and execution. No game/display starts.
+        capture = Path(temporary) / 'capture.py'
+        capture.write_text('#!' + sys.executable + '\n' +
+            'import json, os, sys\n' +
+            'print(json.dumps({"args":sys.argv[1:],"home":os.environ.get("HOME"),"cwd":os.getcwd(),"xdg":[os.environ.get(key) for key in ["XDG_DATA_HOME","XDG_CONFIG_HOME","XDG_CACHE_HOME"]]}))\n')
+        capture.chmod(0o755)
         input_data = {
-            'runnerId': runner, 'program': str(program), 'contentPath': str(program),
+            'runnerId': runner, 'program': str(capture), 'contentPath': str(capture),
             'accountRoot': account, 'saveRoot': save, 'cacheRoot': str(Path(temporary) / 'cache'),
             'files': manifest['files'], 'artifacts': {},
         }
-        command = [korrid, 'plugin-prepare', str(root / 'plugin.ts'), json.dumps(input_data), '{"modifiers":[]}', digest]
-        prepared = json.loads(subprocess.check_output(command, text=True))
-        plan = prepared['plan']
-        assert plan['command'] == str(program)
-        assert plan['args'] == ['--fullscreen']
-        assert plan['env'] == {'HOME': account}
-        assert plan['envUnset'] == ['XDG_DATA_HOME', 'XDG_CONFIG_HOME', 'XDG_CACHE_HOME']
-        assert plan['directories'] == [account] and plan['cwd'] == account
-        assert not Path(account).exists() and not Path(save).exists(), 'preparation must perform no effects'
+        command = [korrid, 'plugin-run', str(root / 'plugin.ts'), json.dumps(input_data), '{"modifiers":[]}', digest]
+        environment = os.environ | {key: '/must-be-unset' for key in ['XDG_DATA_HOME', 'XDG_CONFIG_HOME', 'XDG_CACHE_HOME']}
+        captured = json.loads(subprocess.check_output(command, env=environment, text=True))
+        assert captured['args'] == ['--fullscreen']
+        assert captured['home'] == account and captured['cwd'] == account
+        assert captured['xdg'] == [None, None, None]
+        assert Path(account).is_dir() and not Path(save).exists()
         checks += 1
         for change in [
             {'runnerId': '@miniarray:other/other'},
@@ -60,7 +69,7 @@ for package in packages:
             {'overrides': {'config': {}}},
         ]:
             altered = input_data | change
-            result = subprocess.run(command[:3] + [json.dumps(altered)] + command[4:], capture_output=True, text=True)
+            result = subprocess.run(command[:3] + [json.dumps(altered)] + command[4:], env=environment, capture_output=True, text=True)
             assert result.returncode != 0, f'{slug} accepted {change}'
             checks += 1
     with tempfile.TemporaryDirectory(prefix='native-game-smoke-') as temporary:

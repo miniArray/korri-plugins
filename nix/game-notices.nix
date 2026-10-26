@@ -41,14 +41,20 @@ pkgs.runCommand "${name}-binary-notices"
     find . -type f \( -iname '*license*' -o -iname '*copyright*' -o -name THIRD_PARTY_NOTICES.md \) \
       -exec cp --parents '{}' "$out/share/notices/source/" \;
     cd "$TMPDIR"
-  godot --headless --script ${./godot-notices.gd} -- "$out/share/notices" > "$TMPDIR/engine.log" 2>&1
+    godot --headless --script ${./godot-notices.gd} -- "$out/share/notices" > "$TMPDIR/engine.log" 2>&1
     cat "$TMPDIR/engine.log"
     if grep -E 'SCRIPT ERROR:|^ERROR:' "$TMPDIR/engine.log"; then exit 1; fi
     test -s "$out/share/notices/GODOT-LICENSE.txt"
     test -s "$out/share/notices/GODOT-COPYRIGHT.json"
     test -s "$out/share/notices/GODOT-LICENSES.json"
     ${pkgs.lib.optionalString (cargoLock != null) ''
-      mkdir -p "$out/share/notices/covered-source"
+      mkdir -p "$out/share/notices/covered-source" "$out/share/notices/rust-standard-library"
+      # The compiled bindings also contain Rust's standard library.
+      cp ${pkgs.rustc.doc}/share/doc/rustc/COPYRIGHT-library.html \
+        "$out/share/notices/rust-standard-library/"
+      cp ${pkgs.rustc.doc}/share/doc/docs/html/static.files/LICENSE-MIT-*.txt \
+        ${pkgs.rustc.doc}/share/doc/docs/html/static.files/LICENSE-APACHE-*.txt \
+        "$out/share/notices/rust-standard-library/"
       cp ${./licenses/MPL-2.0.txt} "$out/share/notices/MPL-2.0.txt"
       cp ${cargoLock} "$out/share/notices/covered-source/Cargo.lock"
       ${pkgs.lib.concatMapStringsSep "\n" (entry: ''
