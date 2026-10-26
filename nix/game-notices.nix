@@ -40,7 +40,8 @@ pkgs.runCommand "${name}-binary-notices"
     cd ${sourceRoot}
     find . -type f \( -iname '*license*' -o -iname '*copyright*' -o -name THIRD_PARTY_NOTICES.md \) \
       -exec cp --parents '{}' "$out/share/notices/source/" \;
-    godot --headless --script ${./godot-notices.gd} -- "$out/share/notices" > "$TMPDIR/engine.log" 2>&1
+    cd "$TMPDIR"
+  godot --headless --script ${./godot-notices.gd} -- "$out/share/notices" > "$TMPDIR/engine.log" 2>&1
     cat "$TMPDIR/engine.log"
     if grep -E 'SCRIPT ERROR:|^ERROR:' "$TMPDIR/engine.log"; then exit 1; fi
     test -s "$out/share/notices/GODOT-LICENSE.txt"
