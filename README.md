@@ -8,6 +8,9 @@ the owner's exact approval digest.
 | Output | Plugin | Platforms |
 |---|---|---|
 | `korri-plugin-eggshell` | `@miniarray:eggshell`, the [Eggshell](https://github.com/miniArray/eggshell) level player | x86_64 and aarch64 Linux |
+| `korri-plugin-bad-culture` | `@miniarray:bad-culture`, [Bad Culture](https://github.com/miniArray/bad-culture) | x86_64 and aarch64 Linux |
+| `korri-plugin-credence` | `@miniarray:credence`, [Credence](https://github.com/miniArray/credence) | x86_64 and aarch64 Linux |
+| `korri-plugin-rot-and-light` | `@miniarray:rot-and-light`, [Rot and Light](https://github.com/miniArray/rot-and-light) | x86_64 and aarch64 Linux |
 
 ## Publisher binding
 
@@ -30,6 +33,20 @@ Godot version from nixpkgs (4.7.2). On aarch64 it uses GLES compatibility
 rendering. Nothing builds on a device. The aarch64 closure is about 1.2 GB,
 almost all of it the Godot runtime, which devices fetch from cache.nixos.org.
 
+## Native games
+
+The three native-game plugins declare their own packaged games and hash-bound
+runners through Core's existing contracts. They need no imported content file
+or new system. Their immutable launcher is the declared release file. Enabled
+plugins contribute their own game to the library. This does not enable or
+install anything on a device.
+
+Each package includes accessible original-work, engine and dependency notices.
+The Rust games also include the exact covered dependency source archives.
+[Native game packaging](plugins/NATIVE-GAMES.md) records source pins, contract
+grounding, rights limits and the headless verification boundary. No original
+work is relicensed as open source.
+
 ## Build and publish
 
 Run on a build machine, never a target device. ARM outputs need an aarch64
@@ -39,6 +56,11 @@ builder.
 nix build --no-link .#packages.x86_64-linux.korri-plugin-eggshell
 nix build --no-link .#packages.aarch64-linux.korri-plugin-eggshell
 ```
+
+The new native packages have matching output names in the table above. Run
+`nix build --no-link .#checks.x86_64-linux.native-games` and the corresponding
+`aarch64-linux` check before publication. These use the real host and korrid
+sandbox plus headless game smoke checks, not physical device tests.
 
 The signed cache uses the standard Nix file-cache format. GitHub Pages serves
 `nix-cache-info` and signed `.narinfo` files from `cache-index`. One
