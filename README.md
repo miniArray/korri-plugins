@@ -58,9 +58,16 @@ nix build --no-link .#packages.aarch64-linux.korri-plugin-eggshell
 ```
 
 The new native packages have matching output names in the table above. Run
-`nix build --no-link .#checks.x86_64-linux.native-games` and the corresponding
-`aarch64-linux` check before publication. These use the real host and korrid
-sandbox plus headless game smoke checks, not physical device tests.
+`nix flake check` on x86_64-linux and build every `korri-plugin-*` package for
+aarch64-linux before publication. Run the corresponding aarch64-linux checks
+where supported. `plugin-contracts` typechecks all four plugins against the
+pinned Core contract, checks derived-ID declarations and real host admission,
+and exercises Eggshell's launch plan and real korrid `plugin-run` path.
+`native-games` uses the real host and korrid sandbox plus headless game smoke
+checks. Neither check proves physical device behavior.
+
+Core derives runner IDs as `<pluginId>/<key>` and system IDs as their map keys.
+Do not author runner or system `id` fields (ADR 0045).
 
 The signed cache uses the standard Nix file-cache format. GitHub Pages serves
 `nix-cache-info` and signed `.narinfo` files from `cache-index`. One

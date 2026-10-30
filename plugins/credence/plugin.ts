@@ -13,11 +13,11 @@ export const games = {
   },
 }
 export const runners = {
-  credence: { id: "@miniarray:credence/credence", program: "game", releases: [release] },
+  credence: { program: "game", releases: [release] },
 }
 
 function prepare(input: PluginLaunchInput): PluginLaunchOutput {
-  if (input.runnerId !== runners.credence.id || input.corePath !== undefined)
+  if (input.runnerId !== "@miniarray:credence/credence" || input.corePath !== undefined)
     throw new Error("Unknown Credence runner or unexpected emulator core")
   if (input.contentPath !== input.program)
     throw new Error("Credence requires its own packaged launcher")

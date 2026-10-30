@@ -13,11 +13,11 @@ export const games = {
   },
 }
 export const runners = {
-  "bad-culture": { id: "@miniarray:bad-culture/bad-culture", program: "game", releases: [release] },
+  "bad-culture": { program: "game", releases: [release] },
 }
 
 function prepare(input: PluginLaunchInput): PluginLaunchOutput {
-  if (input.runnerId !== runners["bad-culture"].id || input.corePath !== undefined)
+  if (input.runnerId !== "@miniarray:bad-culture/bad-culture" || input.corePath !== undefined)
     throw new Error("Unknown Bad Culture runner or unexpected emulator core")
   if (input.contentPath !== input.program)
     throw new Error("Bad Culture requires its own packaged launcher")

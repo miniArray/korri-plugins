@@ -13,7 +13,6 @@ export const description =
 // not claimed. A JSON file that is not a level fails to load and reports why.
 export const systems = {
   eggshell: {
-    id: "eggshell",
     title: "Eggshell",
     content: { extensions: ["json"] },
   },
@@ -21,14 +20,13 @@ export const systems = {
 
 export const runners = {
   eggshell: {
-    id: "@miniarray:eggshell/eggshell",
     program: "eggshell",
     systems: ["eggshell"],
   },
 }
 
 function prepareLaunch(input: PluginLaunchInput): PluginLaunchOutput {
-  if (input.runnerId !== runners.eggshell.id) {
+  if (input.runnerId !== "@miniarray:eggshell/eggshell") {
     throw new Error("Unknown Eggshell runner")
   }
   if (input.corePath !== undefined) {

@@ -78,6 +78,13 @@ rec {
       selected = packages.${system};
     in
     {
+      plugin-contracts = import ./plugin-contracts-check.nix {
+        inherit pkgs;
+        packages = selected;
+        contract = korri + "/contracts/generated/korrid.ts";
+        hostPackage = korri.packages.${system}.korri-plugin-host;
+        korridPackage = korri.packages.${system}.korrid;
+      };
       native-games =
         pkgs.runCommand "miniarray-native-game-checks"
           {

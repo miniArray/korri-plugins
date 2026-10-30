@@ -116,17 +116,17 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1792789855,
-        "narHash": "sha256-FCZLkQK06N2iTdfw3ure91cAJHf0EE+0x8eAO2LQTug=",
+        "lastModified": 1793380283,
+        "narHash": "sha256-+XSWoaE53CTSVONY4Bcq/Yru7QL2FrHg8o+BEFDxxFo=",
         "owner": "korri-os",
         "repo": "korri",
-        "rev": "1e5f6b8b432d3970b9814884769503827d0c8629",
+        "rev": "62432aa04b199caf47399bee23e25ae949efdb92",
         "type": "github"
       },
       "original": {
         "owner": "korri-os",
         "repo": "korri",
-        "rev": "1e5f6b8b432d3970b9814884769503827d0c8629",
+        "rev": "62432aa04b199caf47399bee23e25ae949efdb92",
         "type": "github"
       }
     },
@@ -213,17 +213,17 @@
     "proseql": {
       "flake": false,
       "locked": {
-        "lastModified": 1785529631,
-        "narHash": "sha256-lCNAutPfiqWtwjy5wSYLi+kDSRKdBRBGRAb+H2WUtAg=",
+        "lastModified": 1792953874,
+        "narHash": "sha256-SZp+1zfOsBC1RCTzQkVmZ54XbXFF3GJYGujRcf9xtjU=",
         "owner": "simonwjackson",
         "repo": "proseql",
-        "rev": "7ba57cf17c01b15ccdb030237a96b6376a349253",
+        "rev": "112817e6ebc865675b54990f6b880ce4267092bf",
         "type": "github"
       },
       "original": {
         "owner": "simonwjackson",
         "repo": "proseql",
-        "rev": "7ba57cf17c01b15ccdb030237a96b6376a349253",
+        "rev": "112817e6ebc865675b54990f6b880ce4267092bf",
         "type": "github"
       }
     },

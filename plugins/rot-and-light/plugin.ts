@@ -13,11 +13,11 @@ export const games = {
   },
 }
 export const runners = {
-  "rot-and-light": { id: "@miniarray:rot-and-light/rot-and-light", program: "game", releases: [release] },
+  "rot-and-light": { program: "game", releases: [release] },
 }
 
 function prepare(input: PluginLaunchInput): PluginLaunchOutput {
-  if (input.runnerId !== runners["rot-and-light"].id || input.corePath !== undefined)
+  if (input.runnerId !== "@miniarray:rot-and-light/rot-and-light" || input.corePath !== undefined)
     throw new Error("Unknown Rot and Light runner or unexpected emulator core")
   if (input.contentPath !== input.program)
     throw new Error("Rot and Light requires its own packaged launcher")
