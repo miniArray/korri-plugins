@@ -1,0 +1,10 @@
+StorePath: /nix/store/3ds0ij05kmgb9g96ymg3ybffxlsmx5a7-korri-plugin
+URL: https://github.com/miniArray/korri-plugins/releases/download/build-c0d0768da040/0cw6anj8av1bg92v4xmr1yky9f0ycbi7y57x9ac58n9yg2qhzr09.nar.xz
+Compression: xz
+FileHash: sha256:0cw6anj8av1bg92v4xmr1yky9f0ycbi7y57x9ac58n9yg2qhzr09
+FileSize: 1368
+NarHash: sha256:1x43yzhh6x2nszhkzia6xjs0ymfr60znana9ch7j5bsvccqbss1q
+NarSize: 3112
+References: 828b2kwivqk3ibyza8s2vvrxmr7nscdq-eggshell
+Deriver: xw9266w7ncnjz6w63qfsrgncjkcwr384-korri-plugin.drv
+Sig: miniarray-plugins-1:6m7LnREgLkggKdrtdX+V5ZY46haiPuZDYl8o0s9D85nd+l3eTvF8zJnfMpg0ukD0Pyj/COFPOG0eHgIjwVj3DQ==
